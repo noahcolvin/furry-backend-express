@@ -1,16 +1,17 @@
 import request from 'supertest';
 import express from 'express';
-import itemsRouter from '../routes/items';
+import myFavoriteItemsRouter from '../routes/my-favorite-items';
 import { StoreItems } from '../data/store-items';
 
 const app = express();
-app.use(itemsRouter);
+app.use(myFavoriteItemsRouter);
 
-describe('GET /items', () => {
-  it('should return all store items', async () => {
-    const response = await request(app).get('/items');
+describe('GET /my-favorite-items', () => {
+  it('should return a random number of store items between 2 and 4', async () => {
+    const response = await request(app).get('/my-favorite-items');
     expect(response.status).toBe(200);
-    expect(response.body.length).toBe(StoreItems.length);
+    expect(response.body.length).toBeGreaterThanOrEqual(2);
+    expect(response.body.length).toBeLessThanOrEqual(4);
     response.body.forEach((item: { id: string; name: string; price: number; description: string; rating: number; image: string; about: string[]; categories: string[] }) => {
       expect(item).toHaveProperty('id');
       expect(item).toHaveProperty('name');
@@ -24,7 +25,7 @@ describe('GET /items', () => {
   });
 
   it('should return items with valid properties', async () => {
-    const response = await request(app).get('/items');
+    const response = await request(app).get('/my-favorite-items');
     response.body.forEach((item: { id: string; name: string; price: number; description: string; rating: number; image: string; about: string[]; categories: string[] }) => {
       expect(typeof item.id).toBe('string');
       expect(typeof item.name).toBe('string');
@@ -38,7 +39,7 @@ describe('GET /items', () => {
   });
 
   it('should return items that exist in the StoreItems array', async () => {
-    const response = await request(app).get('/items');
+    const response = await request(app).get('/my-favorite-items');
     const storeItemIds = StoreItems.map(item => item.id);
     response.body.forEach((item: { id: string }) => {
       expect(storeItemIds).toContain(item.id);
