@@ -1,6 +1,6 @@
 import request from 'supertest';
 import express from 'express';
-import myFriendsRouter from '../routes/myFriends';
+import myFriendsRouter from '../src/routes/myFriends';
 
 const app = express();
 app.use(myFriendsRouter);

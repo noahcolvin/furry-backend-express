@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
-import myFavoriteItemsRouter from '../routes/my-favorite-items';
-import { StoreItems } from '../data/store-items';
+import myFavoriteItemsRouter from '../src/routes/my-favorite-items';
+import { StoreItems } from '../src/data/store-items';
 
 const app = express();
 app.use(myFavoriteItemsRouter);

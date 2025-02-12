@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
-import itemsRouter from '../routes/items';
-import { StoreItems } from '../data/store-items';
+import itemsRouter from '../src/routes/items';
+import { StoreItems } from '../src/data/store-items';
 
 const app = express();
 app.use(itemsRouter);
