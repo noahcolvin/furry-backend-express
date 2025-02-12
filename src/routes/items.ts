@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { StoreItems } from '../data/store-items';
+import { StoreItems } from '../data/store-items.js';
 const router = express.Router();
 
 router.get('/items', (req: Request, res: Response) => {

@@ -1,16 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES2020",  // Or a later ECMAScript version if you need it
-    "module": "commonjs",
-    "outDir": "./dist",  // Output directory for compiled JavaScript
-    "rootDir": "./src",       // Root directory of your TypeScript files
-    "strict": true,       // Enable strict type checking
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "strict": true,
+    "declaration": true,
+    "outDir": "./dist", // Output directory for compiled JavaScript
+    "rootDir": "./src", // Root directory of your TypeScript files
     "esModuleInterop": true, // Important for compatibility with CommonJS modules
     "skipLibCheck": true, // Speeds up compilation by skipping type checking of declaration files
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true, // Allow importing JSON files
-    "sourceMap": true    // Generate source maps for debugging
+    "sourceMap": true, // Generate source maps for debugging
+    "experimentalDecorators": true
   },
-  "include": ["./src/**/*.ts"], // Files to include in compilation
-  "exclude": ["node_modules"] // Files to exclude from compilation
+  "include": [
+    "./src/**/*.ts"
+  ], // Files to include in compilation
+  "exclude": [
+    "node_modules"
+  ], // Files to exclude from compilation
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true
+  }
 }
