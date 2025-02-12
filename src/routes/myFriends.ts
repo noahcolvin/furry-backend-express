@@ -1,4 +1,7 @@
 import express, { Request, Response } from 'express';
+import { DI } from '../app.js';
+import { QueryOrder } from '@mikro-orm/core';
+import { Friend } from '../entities/Friend.js';
 const router = express.Router();
 
 const storageUrl = process.env.STORAGE_URL || '';
@@ -25,8 +28,20 @@ function getRandomFriends(): MyFriend[] {
   return shuffledFriends.slice(0, numberOfFriends);
 }
 
-router.get('/my-friends', (req: Request, res: Response) => {
-  res.json(getRandomFriends());
+function getRandomNumber(max: number): number {
+  return Math.floor(Math.random() * max);
+}
+
+router.get('/my-friends', async (req: Request, res: Response) => {
+  const count = await DI.friends.count();
+  const randomFriends: Friend[] = [];
+
+  for (let i = 0; i < 3; i++) {
+    const randomIndex = getRandomNumber(count);
+    const randomFriend = await DI.friends.findOne({ id: randomIndex });
+    randomFriends.push(randomFriend as unknown as Friend);
+  }
+  res.json(randomFriends);
 });
 
 export default router;
