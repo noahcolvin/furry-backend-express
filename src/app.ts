@@ -18,6 +18,7 @@ export const DI = {} as DIType;
 const bootstrap = async () => {
   // initialize the ORM, loading the config file dynamically
   const orm = await MikroORM.init();
+  await orm.schema.ensureDatabase();
   console.log(orm.em); // access EntityManager via `em` property
   console.log(orm.schema); // access SchemaGenerator via `schema` property
 
