@@ -44,4 +44,46 @@ describe('GET /items', () => {
       expect(storeItemIds).toContain(item.id);
     });
   });
+
+  it('should filter items by animal category', async () => {
+    const response = await request(app).get('/items').query({ animal: 'dog' });
+    expect(response.status).toBe(200);
+    response.body.forEach((item: { categories: string[] }) => {
+      expect(item.categories).toContain('dog');
+    });
+  });
+
+  it('should filter items by product category', async () => {
+    const response = await request(app).get('/items').query({ product: 'food' });
+    expect(response.status).toBe(200);
+    response.body.forEach((item: { categories: string[] }) => {
+      expect(item.categories).toContain('food');
+    });
+  });
+
+  it('should filter items by search term', async () => {
+    const response = await request(app).get('/items').query({ search: 'toy' });
+    expect(response.status).toBe(200);
+    response.body.forEach((item: { name: string; description: string }) => {
+      const searchLower = 'toy'.toLowerCase();
+      expect(
+        item.name.toLowerCase().includes(searchLower) ||
+        item.description.toLowerCase().includes(searchLower)
+      ).toBe(true);
+    });
+  });
+
+  it('should filter items by multiple criteria', async () => {
+    const response = await request(app).get('/items').query({ animal: 'cat', product: 'toy', search: 'tower' });
+    expect(response.status).toBe(200);
+    response.body.forEach((item: { categories: string[]; name: string; description: string }) => {
+      const searchLower = 'tower'.toLowerCase();
+      expect(item.categories).toContain('cat');
+      expect(item.categories).toContain('toy');
+      expect(
+        item.name.toLowerCase().includes(searchLower) ||
+        item.description.toLowerCase().includes(searchLower)
+      ).toBe(true);
+    });
+  });
 });
