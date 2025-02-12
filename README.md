@@ -18,7 +18,7 @@ Install [Nodejs](https://nodejs.org/en/) on your platform of choice.
 `.env`: This holds the base URL for the file storage and the port for the server
 ```
 PORT=3000
-STORAGE_URL=http://{projectId}supabase.co/storage/v1/object/public
+STORAGE_URL=http://{projectId}.supabase.co/storage/v1/object/public
 ```
 
 Start the local service:
@@ -28,7 +28,6 @@ npm run dev
 ```
 
 ## Running Tests
-Follow the instructions to set up [Deno](https://deno.com/).
 
 ```bash
 npm test
