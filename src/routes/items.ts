@@ -1,26 +1,40 @@
 import express, { Request, Response } from 'express';
-import { StoreItems } from '../data/store-items.js';
+import { DI } from '../app.js';
+
 const router = express.Router();
 
-router.get('/items', (req: Request, res: Response) => {
+router.get('/items', async (req: Request, res: Response) => {
   const { animal, product, search } = req.query;
 
-  let filteredItems = StoreItems;
+  const query: any = {};
 
-  if (animal) {
-    filteredItems = filteredItems.filter(item => item.categories.includes(animal as string));
-  }
-
-  if (product) {
-    filteredItems = filteredItems.filter(item => item.categories.includes(product as string));
+  if (animal && product) {
+    query.categories = {
+      $contains: [animal, product],
+    };
+  } else if (animal) {
+    query.categories = {
+      $contains: [animal],
+    };
+  } else if (product) {
+    query.categories = {
+      $contains: [product],
+    };
   }
 
   if (search) {
     const searchLower = (search as string).toLowerCase();
-    filteredItems = filteredItems.filter(item => item.name.toLowerCase().includes(searchLower) || item.description.toLowerCase().includes(searchLower));
+    query.$or = [
+      { name: { $ilike: `%${searchLower}%` } },
+      { description: { $ilike: `%${searchLower}%` } },
+    ];
   }
 
-  res.json(filteredItems);
+  console.log('query', query);
+
+  const items = await DI.storeItems.find(query);
+
+  res.json(items);
 });
 
 export default router;

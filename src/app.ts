@@ -6,11 +6,13 @@ import myFavoriteItemsRoutes from './routes/my-favorite-items.js';
 
 import { MikroORM, RequestContext, EntityManager, IDatabaseDriver, Connection, EntityRepository } from '@mikro-orm/core';
 import { Friend } from './entities/Friend.js';
+import { StoreItem } from './entities/StoreItem.js';
 
 interface DIType {
   orm: MikroORM<IDatabaseDriver<Connection>>;
   em: EntityManager<IDatabaseDriver<Connection>>;
   friends: EntityRepository<Friend>;
+  storeItems: EntityRepository<StoreItem>;
 }
 
 export const DI = {} as DIType;
@@ -19,12 +21,10 @@ const bootstrap = async () => {
   // initialize the ORM, loading the config file dynamically
   const orm = await MikroORM.init();
   await orm.schema.ensureDatabase();
-  console.log(orm.em); // access EntityManager via `em` property
-  console.log(orm.schema); // access SchemaGenerator via `schema` property
-
   DI.orm = orm;
   DI.em = orm.em;
   DI.friends = orm.em.getRepository(Friend);
+  DI.storeItems = orm.em.getRepository(StoreItem);
 
   const app = express();
   const port = process.env.PORT || 3000;
