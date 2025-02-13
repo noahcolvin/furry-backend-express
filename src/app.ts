@@ -5,7 +5,7 @@ import storeItemsRoutes from './routes/items.js';
 import myFavoriteItemsRoutes from './routes/my-favorite-items.js';
 
 import { MikroORM, RequestContext, EntityManager, IDatabaseDriver, Connection, EntityRepository } from '@mikro-orm/core';
-import { Friend } from './modules/friends/friend.entity.js';
+import { Friend } from './entities/Friend.js';
 
 interface DIType {
   orm: MikroORM<IDatabaseDriver<Connection>>;

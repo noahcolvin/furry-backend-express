@@ -7,22 +7,24 @@
     "test": "jest",
     "start": "node dist/app.js",
     "build": "tsc",
-    "dev": "ts-node src/app.ts"
+    "dev": "ts-node src/app.ts",
+    "seed": "node dist/seeders/seed-data.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@mikro-orm/core": "^6.4.5",
-    "@mikro-orm/postgresql": "^6.4.5",
-    "@mikro-orm/reflection": "^6.4.5",
+    "@mikro-orm/core": "^6.4.6",
+    "@mikro-orm/postgresql": "^6.4.6",
+    "@mikro-orm/reflection": "^6.4.6",
+    "@mikro-orm/seeder": "^6.4.6",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "fastify": "^5.2.1"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "^6.4.5",
+    "@mikro-orm/cli": "^6.4.6",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.1",

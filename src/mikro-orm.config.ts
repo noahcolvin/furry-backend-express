@@ -1,5 +1,6 @@
 import { Options, PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
+import { SeedManager } from '@mikro-orm/seeder';
 
 const config: Options = {
   driver: PostgreSqlDriver,
@@ -16,6 +17,7 @@ const config: Options = {
   metadataProvider: TsMorphMetadataProvider,
   // enable debug mode to log SQL queries and discovery information
   debug: true,
+  extensions: [SeedManager],
 };
 
 export default config;
