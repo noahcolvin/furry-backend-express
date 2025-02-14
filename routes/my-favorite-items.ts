@@ -17,7 +17,6 @@ const getRandomUniqueNumbers = (max: number): number[] => {
 router.get('/my-favorite-items', async (req: Request, res: Response) => {
   const { count } = await db.selectFrom('item').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
   const randomItemIds = getRandomUniqueNumbers(Number(count) - 1);
-  console.log(randomItemIds);
   const items = await db.selectFrom('item').selectAll().where('id', 'in', randomItemIds).execute();
 
   res.json(items);
