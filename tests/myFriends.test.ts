@@ -1,6 +1,9 @@
+require('dotenv').config();
 import request from 'supertest';
 import express from 'express';
 import myFriendsRouter from '../routes/myFriends';
+
+const storageUrl = process.env.STORAGE_URL || '';
 
 const app = express();
 app.use(myFriendsRouter);
@@ -20,7 +23,7 @@ describe('GET /my-friends', () => {
   it('should return friends with valid names and images', async () => {
     const response = await request(app).get('/my-friends');
     const validNames = ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Hank'];
-    const validImages = validNames.map((name, index) => `/furry-public/pets/pet${index + 1}.jpg`);
+    const validImages = validNames.map((name, index) => `${storageUrl}/furry-public/pets/pet${index + 1}.jpg`);
 
     response.body.forEach((friend: { name: string; image: string }) => {
       expect(validNames).toContain(friend.name);

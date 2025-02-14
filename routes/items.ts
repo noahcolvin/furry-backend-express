@@ -17,7 +17,6 @@ router.get('/items', async (req: Request, res: Response) => {
   }
 
   if (search) {
-    const searchLower = (search as string).toLowerCase();
     query = query.where(eb => eb.or([eb('name', 'like', `%${search}%`), eb('description', 'like', `%${search}%`)]));
   }
 

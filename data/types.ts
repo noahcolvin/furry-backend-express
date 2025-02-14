@@ -1,4 +1,4 @@
-import { ColumnType, Generated, Insertable, JSONColumnType, Selectable, Updateable } from 'kysely';
+import { Generated, Selectable } from 'kysely';
 
 export interface Database {
   friend: FriendTable;
