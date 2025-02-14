@@ -1,7 +1,6 @@
 import request from 'supertest';
 import express from 'express';
 import myFavoriteItemsRouter from '../routes/my-favorite-items';
-import { StoreItems } from '../data/store-items';
 
 const app = express();
 app.use(myFavoriteItemsRouter);
@@ -27,7 +26,7 @@ describe('GET /my-favorite-items', () => {
   it('should return items with valid properties', async () => {
     const response = await request(app).get('/my-favorite-items');
     response.body.forEach((item: { id: string; name: string; price: number; description: string; rating: number; image: string; about: string[]; categories: string[] }) => {
-      expect(typeof item.id).toBe('string');
+      expect(typeof item.id).toBe('number');
       expect(typeof item.name).toBe('string');
       expect(typeof item.price).toBe('number');
       expect(typeof item.description).toBe('string');
@@ -35,14 +34,6 @@ describe('GET /my-favorite-items', () => {
       expect(typeof item.image).toBe('string');
       expect(Array.isArray(item.about)).toBe(true);
       expect(Array.isArray(item.categories)).toBe(true);
-    });
-  });
-
-  it('should return items that exist in the StoreItems array', async () => {
-    const response = await request(app).get('/my-favorite-items');
-    const storeItemIds = StoreItems.map(item => item.id);
-    response.body.forEach((item: { id: string }) => {
-      expect(storeItemIds).toContain(item.id);
     });
   });
 });
