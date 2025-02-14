@@ -1,32 +1,25 @@
 import express, { Request, Response } from 'express';
+import { db } from '../data/database';
+
 const router = express.Router();
 
-const storageUrl = process.env.STORAGE_URL || '';
+const getRandomUniqueNumbers = (max: number): number[] => {
+  const numberOfValues = Math.floor(Math.random() * 3) + 1;
+  const uniqueNumbers = new Set<number>();
 
-interface MyFriend {
-  name: string;
-  image: string;
-}
+  while (uniqueNumbers.size < numberOfValues) {
+    uniqueNumbers.add(Math.floor(Math.random() * max) + 1);
+  }
 
-const friends: MyFriend[] = [
-  { name: 'Alice', image: storageUrl + '/furry-public/pets/pet1.jpg' },
-  { name: 'Bob', image: storageUrl + '/furry-public/pets/pet2.jpg' },
-  { name: 'Charlie', image: storageUrl + '/furry-public/pets/pet3.jpg' },
-  { name: 'David', image: storageUrl + '/furry-public/pets/pet4.jpg' },
-  { name: 'Eve', image: storageUrl + '/furry-public/pets/pet5.jpg' },
-  { name: 'Frank', image: storageUrl + '/furry-public/pets/pet6.jpg' },
-  { name: 'Grace', image: storageUrl + '/furry-public/pets/pet7.jpg' },
-  { name: 'Hank', image: storageUrl + '/furry-public/pets/pet8.jpg' },
-];
+  return Array.from(uniqueNumbers);
+};
 
-function getRandomFriends(): MyFriend[] {
-  const numberOfFriends = Math.floor(Math.random() * 3) + 1;
-  const shuffledFriends = friends.sort(() => 0.5 - Math.random());
-  return shuffledFriends.slice(0, numberOfFriends);
-}
+router.get('/my-friends', async (req: Request, res: Response) => {
+  const { count } = await db.selectFrom('friend').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
+  const randomFriendIds = getRandomUniqueNumbers(Number(count) - 1);
+  const friends = await db.selectFrom('friend').selectAll().where('id', 'in', randomFriendIds).execute();
 
-router.get('/my-friends', (req: Request, res: Response) => {
-  res.json(getRandomFriends());
+  res.json(friends);
 });
 
 export default router;

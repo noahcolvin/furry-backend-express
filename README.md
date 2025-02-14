@@ -21,7 +21,19 @@ PORT=3000
 STORAGE_URL=http://{projectId}.supabase.co/storage/v1/object/public
 ```
 
-Start the local service:
+#### Start PostgreSQL
+```bash
+docker compose up # To keep it running in the terminal
+
+docker compose up -d # To start it in the background
+```
+
+#### Migrate/Seed Database
+```bash
+npm run migrate
+```
+
+#### Start the local service:
 ```bash
 npm install
 npm run dev
@@ -48,7 +60,7 @@ Yes, they only GET a few pieces of data. The sample mobile app is not complete a
 Sometimes simple is all you need, and for this, it is fine.
 
 #### Why is the data hard-coded?
-Just to keep it simple. In a real application, this data would be stored in a real database. You'd also need a way to add, update, and delete data.
+Just to keep it simple. In a real application, you'd need a way to add, update, and delete data as well.
 
 #### Why is there no authentication?
 No need for the current app.

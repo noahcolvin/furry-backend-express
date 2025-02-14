@@ -1,26 +1,29 @@
 import express, { Request, Response } from 'express';
-import { StoreItems } from '../data/store-items';
+import { db } from '../data/database';
+
 const router = express.Router();
 
-router.get('/items', (req: Request, res: Response) => {
+router.get('/items', async (req: Request, res: Response) => {
   const { animal, product, search } = req.query;
 
-  let filteredItems = StoreItems;
+  let query = db.selectFrom('item');
 
   if (animal) {
-    filteredItems = filteredItems.filter(item => item.categories.includes(animal as string));
+    query = query.where('categories', '&&', `{${animal as string}}` as any);
   }
 
   if (product) {
-    filteredItems = filteredItems.filter(item => item.categories.includes(product as string));
+    query = query.where('categories', '&&', `{${product as string}}` as any);
   }
 
   if (search) {
     const searchLower = (search as string).toLowerCase();
-    filteredItems = filteredItems.filter(item => item.name.toLowerCase().includes(searchLower) || item.description.toLowerCase().includes(searchLower));
+    query = query.where(eb => eb.or([eb('name', 'like', `%${search}%`), eb('description', 'like', `%${search}%`)]));
   }
 
-  res.json(filteredItems);
+  const items = await query.selectAll().execute();
+
+  res.json(items);
 });
 
 export default router;

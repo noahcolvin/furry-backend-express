@@ -1,16 +1,25 @@
 import express, { Request, Response } from 'express';
-import { StoreItem, StoreItems } from '../data/store-items';
+import { db } from '../data/database';
 
 const router = express.Router();
 
-function getRandomItems(): StoreItem[] {
-  const numberOfItems = Math.floor(Math.random() * 3) + 2;
-  const shuffledStoreItems = StoreItems.sort(() => 0.5 - Math.random());
-  return shuffledStoreItems.slice(0, numberOfItems);
-}
+const getRandomUniqueNumbers = (max: number): number[] => {
+  const numberOfValues = Math.floor(Math.random() * 3) + 2;
+  const uniqueNumbers = new Set<number>();
 
-router.get('/my-favorite-items', (req: Request, res: Response) => {
-  res.json(getRandomItems());
+  while (uniqueNumbers.size < numberOfValues) {
+    uniqueNumbers.add(Math.floor(Math.random() * max) + 1);
+  }
+
+  return Array.from(uniqueNumbers);
+};
+
+router.get('/my-favorite-items', async (req: Request, res: Response) => {
+  const { count } = await db.selectFrom('item').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
+  const randomItemIds = getRandomUniqueNumbers(Number(count) - 1);
+  const items = await db.selectFrom('item').selectAll().where('id', 'in', randomItemIds).execute();
+
+  res.json(items);
 });
 
 export default router;
