@@ -1,4 +1,4 @@
-import { Kysely, sql } from 'kysely';
+import { Kysely } from 'kysely';
 
 export async function up(db: Kysely<any>): Promise<void> {
   const storageUrl = process.env.STORAGE_URL || '';
@@ -23,7 +23,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .insertInto('item')
     .values([
       {
-        id: '1',
+        id: 1,
         name: 'Flutter Bird Food',
         price: 59.99,
         description: 'All natural bird food made with the finest seeds and nuts.',
@@ -33,7 +33,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['bird', 'food'],
       },
       {
-        id: '2',
+        id: 2,
         name: 'Meow Master Cat Food',
         price: 19.99,
         description: 'All natural cat food made with exclusive fish and vegetables.',
@@ -43,7 +43,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['cat', 'food'],
       },
       {
-        id: '3',
+        id: 3,
         name: 'Cities Cat Tower',
         price: 74.99,
         description: 'A cat tower that is perfect for any cat to play and sleep on.',
@@ -53,7 +53,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['cat', 'toy'],
       },
       {
-        id: '4',
+        id: 4,
         name: 'Mr Mouse Cat Toy',
         price: 9.99,
         description: 'Realistic mouse toy that will keep your cat entertained for hours.',
@@ -63,7 +63,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['cat', 'toy'],
       },
       {
-        id: '5',
+        id: 5,
         name: 'Bluz Dog Toy',
         price: 14.99,
         description: 'A chew toy that is perfect for any dog to play and chew on.',
@@ -73,7 +73,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['dog', 'toy'],
       },
       {
-        id: '6',
+        id: 6,
         name: "Sam's Natural Dog Food",
         price: 24.99,
         description: 'Made with real chicken and vegetables, this dog food is perfect for any dog.',
@@ -83,7 +83,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['dog', 'food'],
       },
       {
-        id: '7',
+        id: 7,
         name: 'Good Boy Dog Food',
         price: 59.99,
         description: 'All-natural dog food made with the finest chicken and vegetables.',
@@ -93,7 +93,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['dog', 'food'],
       },
       {
-        id: '8',
+        id: 8,
         name: 'Right Stufz Dog Toy',
         price: 13.99,
         description: 'Stuffed toy that is perfect for any dog to play and chew.',
@@ -103,7 +103,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['dog', 'toy'],
       },
       {
-        id: '9',
+        id: 9,
         name: 'Deep Sea Fish Tank',
         price: 129.99,
         description: '50-gallon fish tank that is perfect for any fish to swim in.',
@@ -113,7 +113,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['fish', 'toy'],
       },
       {
-        id: '10',
+        id: 10,
         name: 'Ballz Hamster Toy',
         price: 19.99,
         description: 'A ball that is perfect for any hamster to play and run in.',
@@ -123,7 +123,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         categories: ['hamster', 'toy'],
       },
       {
-        id: '11',
+        id: 11,
         name: 'Munchie Hamster Food',
         price: 19.99,
         description: 'All natural hamster food made with the finest seeds and nuts.',

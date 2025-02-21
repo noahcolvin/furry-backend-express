@@ -17,7 +17,7 @@ router.get('/items', async (req: Request, res: Response) => {
   }
 
   if (search) {
-    query = query.where(eb => eb.or([eb('name', 'like', `%${search}%`), eb('description', 'like', `%${search}%`)]));
+    query = query.where(eb => eb.or([eb('name', 'ilike', `%${search}%`), eb('description', 'ilike', `%${search}%`)]));
   }
 
   const items = await query.selectAll().execute();
