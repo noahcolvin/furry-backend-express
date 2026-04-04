@@ -9,7 +9,8 @@
     "skipLibCheck": true, // Speeds up compilation by skipping type checking of declaration files
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true, // Allow importing JSON files
-    "sourceMap": true    // Generate source maps for debugging
+    "sourceMap": true,    // Generate source maps for debugging
+    "types": ["jest", "node"]
   },
   "include": ["**/*.ts"], // Files to include in compilation
   "exclude": ["node_modules"] // Files to exclude from compilation
