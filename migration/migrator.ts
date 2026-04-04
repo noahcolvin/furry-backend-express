@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 import * as path from 'path'
 import { Pool } from 'pg'
 import { promises as fs } from 'fs'

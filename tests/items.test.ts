@@ -1,6 +1,7 @@
 import request from 'supertest';
 import express from 'express';
 import itemsRouter from '../routes/items';
+import { Item } from '../data/types';
 
 const app = express();
 app.use(itemsRouter);
@@ -9,7 +10,7 @@ describe('GET /items', () => {
   it('should return all store items', async () => {
     const response = await request(app).get('/items');
     expect(response.status).toBe(200);
-    response.body.forEach((item: { id: string; name: string; price: number; description: string; rating: number; image: string; about: string[]; categories: string[] }) => {
+    response.body.forEach((item: Item) => {
       expect(item).toHaveProperty('id');
       expect(item).toHaveProperty('name');
       expect(item).toHaveProperty('price');
@@ -23,7 +24,7 @@ describe('GET /items', () => {
 
   it('should return items with valid properties', async () => {
     const response = await request(app).get('/items');
-    response.body.forEach((item: { id: string; name: string; price: number; description: string; rating: number; image: string; about: string[]; categories: string[] }) => {
+    response.body.forEach((item: Item) => {
       expect(typeof item.id).toBe('number');
       expect(typeof item.name).toBe('string');
       expect(typeof item.price).toBe('number');
@@ -38,7 +39,7 @@ describe('GET /items', () => {
   it('should filter items by animal category', async () => {
     const response = await request(app).get('/items').query({ animal: 'dog' });
     expect(response.status).toBe(200);
-    response.body.forEach((item: { categories: string[] }) => {
+    response.body.forEach((item: Item) => {
       expect(item.categories).toContain('dog');
     });
   });
@@ -46,7 +47,7 @@ describe('GET /items', () => {
   it('should filter items by product category', async () => {
     const response = await request(app).get('/items').query({ product: 'food' });
     expect(response.status).toBe(200);
-    response.body.forEach((item: { categories: string[] }) => {
+    response.body.forEach((item: Item) => {
       expect(item.categories).toContain('food');
     });
   });
@@ -54,7 +55,7 @@ describe('GET /items', () => {
   it('should filter items by search term', async () => {
     const response = await request(app).get('/items').query({ search: 'toy' });
     expect(response.status).toBe(200);
-    response.body.forEach((item: { name: string; description: string }) => {
+    response.body.forEach((item: Item) => {
       const searchLower = 'toy'.toLowerCase();
       expect(item.name.toLowerCase().includes(searchLower) || item.description.toLowerCase().includes(searchLower)).toBe(true);
     });
@@ -63,7 +64,7 @@ describe('GET /items', () => {
   it('should filter items by multiple criteria', async () => {
     const response = await request(app).get('/items').query({ animal: 'cat', product: 'toy', search: 'tower' });
     expect(response.status).toBe(200);
-    response.body.forEach((item: { categories: string[]; name: string; description: string }) => {
+    response.body.forEach((item: Item) => {
       const searchLower = 'tower'.toLowerCase();
       expect(item.categories).toContain('cat');
       expect(item.categories).toContain('toy');

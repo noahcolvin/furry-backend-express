@@ -14,7 +14,7 @@ const getRandomUniqueNumbers = (max: number): number[] => {
   return Array.from(uniqueNumbers);
 };
 
-router.get('/my-friends', async (req: Request, res: Response) => {
+router.get('/my-friends', async (_req: Request, res: Response) => {
   const { count } = await db.selectFrom('friend').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
   const randomFriendIds = getRandomUniqueNumbers(Number(count) - 1);
   const friends = await db.selectFrom('friend').selectAll().where('id', 'in', randomFriendIds).execute();

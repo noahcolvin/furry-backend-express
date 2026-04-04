@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node dist/app.js",
+    "start": "node dist/server.js",
     "build": "tsc",
-    "dev": "ts-node app.ts",
+    "dev": "ts-node server.ts",
     "migrate": "ts-node migration/migrator.ts"
   },
   "keywords": [],

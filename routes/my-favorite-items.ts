@@ -14,7 +14,7 @@ const getRandomUniqueNumbers = (max: number): number[] => {
   return Array.from(uniqueNumbers);
 };
 
-router.get('/my-favorite-items', async (req: Request, res: Response) => {
+router.get('/my-favorite-items', async (_req: Request, res: Response) => {
   const { count } = await db.selectFrom('item').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
   const randomItemIds = getRandomUniqueNumbers(Number(count) - 1);
   const items = await db.selectFrom('item').selectAll().where('id', 'in', randomItemIds).execute();

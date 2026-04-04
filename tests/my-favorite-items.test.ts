@@ -1,6 +1,7 @@
 import request from 'supertest';
 import express from 'express';
 import myFavoriteItemsRouter from '../routes/my-favorite-items';
+import { Item } from '../data/types';
 
 const app = express();
 app.use(myFavoriteItemsRouter);
@@ -11,7 +12,7 @@ describe('GET /my-favorite-items', () => {
     expect(response.status).toBe(200);
     expect(response.body.length).toBeGreaterThanOrEqual(2);
     expect(response.body.length).toBeLessThanOrEqual(4);
-    response.body.forEach((item: { id: string; name: string; price: number; description: string; rating: number; image: string; about: string[]; categories: string[] }) => {
+    response.body.forEach((item: Item) => {
       expect(item).toHaveProperty('id');
       expect(item).toHaveProperty('name');
       expect(item).toHaveProperty('price');
@@ -25,7 +26,7 @@ describe('GET /my-favorite-items', () => {
 
   it('should return items with valid properties', async () => {
     const response = await request(app).get('/my-favorite-items');
-    response.body.forEach((item: { id: string; name: string; price: number; description: string; rating: number; image: string; about: string[]; categories: string[] }) => {
+    response.body.forEach((item: Item) => {
       expect(typeof item.id).toBe('number');
       expect(typeof item.name).toBe('string');
       expect(typeof item.price).toBe('number');
